@@ -26,10 +26,34 @@ public class GameView extends GridLayout{
     }
 
     private void initGameView() {
+        // 设置GridLayout为4列
+        this.setColumnCount(4);
+        this.setBackgroundColor(0xffbbada0);
 
         GestureListener gl = new GestureListener();
         this.setOnTouchListener(gl);
 
+    }
+
+    // 适应手机的宽高
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        int cardWidth = (Math.min(w, h))/4;
+        // 添加方块
+        addCard(cardWidth, cardWidth);
+    }
+
+    // 添加16个方块
+    private void addCard(int cardWidth, int cardHeight) {
+        Card c;
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                c = new Card(getContext());
+                c.setNum(2);
+                addView(c, cardWidth, cardHeight);
+            }
+        }
     }
 
     class GestureListener implements OnTouchListener {
@@ -71,8 +95,6 @@ public class GameView extends GridLayout{
                     }
                     break;
             }
-
-
 
             return true;
         }
