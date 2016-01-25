@@ -1,16 +1,23 @@
 package com.example.tian0312.game2048;
 
 import android.content.Context;
-import android.net.wifi.WifiEnterpriseConfig;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by tian0312 on 16/1/24.
  */
-public class GameView extends GridLayout{
+public class GameView extends GridLayout {
+
+    private Card[][] cardsMap = new Card[4][4];
+    // 用于纪录没有数字卡片的位置
+    private List<Point> emptyPoints = new ArrayList<Point>();
 
     public GameView(Context context) {
         super(context);
@@ -42,6 +49,8 @@ public class GameView extends GridLayout{
         int cardWidth = (Math.min(w, h))/4;
         // 添加方块
         addCard(cardWidth, cardWidth);
+
+        startGame();
     }
 
     // 添加16个方块
@@ -50,10 +59,41 @@ public class GameView extends GridLayout{
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 c = new Card(getContext());
-                c.setNum(2);
+                c.setNum(0);
                 addView(c, cardWidth, cardHeight);
+                cardsMap[x][y] = c;
             }
         }
+    }
+
+    private void startGame() {
+        // 清理
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                 cardsMap[x][y].setNum(0);
+            }
+        }
+        // 初始添加两个数
+        addRandomNum();
+        addRandomNum();
+    }
+
+    // 开始游戏随即添加两个数
+    private void addRandomNum() {
+
+        emptyPoints.clear();
+
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (cardsMap[x][y].getNum() <= 0) {
+                    emptyPoints.add(new Point(x, y));
+                }
+            }
+        }
+
+        Point p = emptyPoints.remove((int)(Math.random() * emptyPoints.size()));
+        cardsMap[p.x][p.y].setNum(Math.random() > 0.1 ? 2 : 4);
+
     }
 
     class GestureListener implements OnTouchListener {
