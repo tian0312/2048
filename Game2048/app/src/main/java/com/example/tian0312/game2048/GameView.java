@@ -76,6 +76,16 @@ public class GameView extends GridLayout {
         // 初始添加两个数
         addRandomNum();
         addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
+        addRandomNum();
     }
 
     // 开始游戏随即添加两个数
@@ -119,24 +129,151 @@ public class GameView extends GridLayout {
                     // 判断手势
                     if(Math.abs(xOffset) > Math.abs(yOffset)) {
                         if(xOffset < -5) {
-                            System.out.println("left");
+                            leftGesture();
                         }
                         else if(xOffset > 5) {
-                            System.out.println("right");
+                            rightGesture();
                         }
                     }
                     else {
                         if(yOffset < -5) {
-                            System.out.println("up");
+                            upGesture();
                         }
                         else if(yOffset > 5) {
-                            System.out.println("down");
+                            downGesture();
                         }
                     }
                     break;
             }
 
             return true;
+        }
+    }
+
+    // 游戏逻辑
+    private void leftGesture() {
+        System.out.println("left");
+        // 两层循环遍历所有16个方格
+        for (int y = 0; y < 4; y++){
+            for (int x = 0; x < 4; x++) {
+                // 从当前元素的右边一列开始遍历
+                for (int x1 = x+1; x1 < 4; x1++) {
+                    // 若遍历到的元素不是0
+                    if(cardsMap[x1][y].getNum() > 0) {
+                        // 若当前元素为0，则把数字移过来，原先带数字的清零
+                        if(cardsMap[x][y].getNum() <= 0) {
+                            cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
+                            cardsMap[x1][y].setNum(0);
+                            // 此处研究一下
+                            // 为了防止类似2222情况后面两个2不合并
+                            x--;
+                            break;
+                        }
+                        // 若当前元素不为0，且两数字相同，合并，并清掉一个
+                        else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
+                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                            cardsMap[x1][y].setNum(0);
+                            break;
+                        }
+                        else if(!cardsMap[x][y].equals(cardsMap[x1][y])) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void rightGesture() {
+        System.out.println("right");
+        // 两层循环遍历所有16个方格
+        for (int y = 0; y < 4; y++){
+            for (int x = 3; x >= 0; x--) {
+                // 从当前元素的左边一列开始遍历
+                for (int x1 = x-1; x1 >= 0; x1--) {
+                    // 若遍历到的元素不是0
+                    if(cardsMap[x1][y].getNum() > 0) {
+                        // 若当前元素为0，则把数字移过来，原先带数字的清零
+                        if(cardsMap[x][y].getNum() <= 0) {
+                            cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
+                            cardsMap[x1][y].setNum(0);
+                            // 此处研究一下
+                            x++;
+                            break;
+                        }
+                        // 若当前元素不为0，且两数字相同，合并，并清掉一个
+                        else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
+                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                            cardsMap[x1][y].setNum(0);
+                            break;
+                        }
+                        else if(!cardsMap[x][y].equals(cardsMap[x1][y])) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void downGesture() {
+        System.out.println("down");
+        // 两层循环遍历所有16个方格
+        for (int x = 0; x < 4; x++){
+            for (int y = 3; y >= 0; y--) {
+                // 从当前元素的上面一行开始遍历
+                for (int y1 = y-1; y1 >= 0; y1--) {
+                    // 若遍历到的元素不是0
+                    if(cardsMap[x][y1].getNum() > 0) {
+                        // 若当前元素为0，则把数字移过来，原先带数字的清零
+                        if(cardsMap[x][y].getNum() <= 0) {
+                            cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
+                            cardsMap[x][y1].setNum(0);
+                            // 此处研究一下
+                            y++;
+                            break;
+                        }
+                        // 若当前元素不为0，且两数字相同，合并，并清掉一个
+                        else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
+                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                            cardsMap[x][y1].setNum(0);
+                            break;
+                        }
+                        else if(!cardsMap[x][y].equals(cardsMap[x][y1])) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private void upGesture() {
+        System.out.println("up");
+        // 两层循环遍历所有16个方格
+        for (int x = 0; x < 4; x++){
+            for (int y = 0; y < 4; y++) {
+                // 从当前元素的下面一行开始遍历
+                for (int y1 = y+1; y1 < 4; y1++) {
+                    // 若遍历到的元素不是0
+                    if(cardsMap[x][y1].getNum() > 0) {
+                        // 若当前元素为0，则把数字移过来，原先带数字的清零
+                        if(cardsMap[x][y].getNum() <= 0) {
+                            cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
+                            cardsMap[x][y1].setNum(0);
+                            // 此处研究一下
+                            y--;
+                            break;
+                        }
+                        // 若当前元素不为0，且两数字相同，合并，并清掉一个
+                        else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
+                            cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
+                            cardsMap[x][y1].setNum(0);
+                            break;
+                        }
+                        else if(!cardsMap[x][y].equals(cardsMap[x][y1])) {
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
