@@ -78,6 +78,12 @@ public class GameView extends GridLayout {
         // 初始添加两个数
         addRandomNum();
         addRandomNum();
+        // 设置初始状态颜色
+        for (int y = 0; y < 4; y++){
+            for (int x = 0; x < 4; x++) {
+                cardsMap[x][y].setColor(cardsMap[x][y].getNum());
+            }
+        }
         // 分数清零
         MainActivity.getMainActivity().clearScore();
     }
