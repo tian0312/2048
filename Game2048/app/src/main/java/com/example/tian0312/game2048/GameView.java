@@ -62,7 +62,6 @@ public class GameView extends GridLayout {
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 c = new Card(getContext());
-                c.setNum(0);
                 addView(c, cardWidth, cardHeight);
                 cardsMap[x][y] = c;
             }
@@ -186,6 +185,11 @@ public class GameView extends GridLayout {
             addRandomNum();
             checkEnd();
         }
+        for (int y = 0; y < 4; y++){
+            for (int x = 0; x < 4; x++) {
+                cardsMap[x][y].setColor(cardsMap[x][y].getNum());
+            }
+        }
     }
     private void rightGesture() {
         isChanged = false;
@@ -223,6 +227,11 @@ public class GameView extends GridLayout {
         if(isChanged) {
             addRandomNum();
             checkEnd();
+        }
+        for (int y = 0; y < 4; y++){
+            for (int x = 0; x < 4; x++) {
+                cardsMap[x][y].setColor(cardsMap[x][y].getNum());
+            }
         }
     }
     private void downGesture() {
@@ -262,6 +271,11 @@ public class GameView extends GridLayout {
             addRandomNum();
             checkEnd();
         }
+        for (int y = 0; y < 4; y++){
+            for (int x = 0; x < 4; x++) {
+                cardsMap[x][y].setColor(cardsMap[x][y].getNum());
+            }
+        }
     }
     private void upGesture() {
         isChanged = false;
@@ -296,9 +310,14 @@ public class GameView extends GridLayout {
                 }
             }
         }
-        if(isChanged) {
+            if(isChanged) {
             addRandomNum();
             checkEnd();
+        }
+        for (int y = 0; y < 4; y++){
+            for (int x = 0; x < 4; x++) {
+                cardsMap[x][y].setColor(cardsMap[x][y].getNum());
+            }
         }
     }
 

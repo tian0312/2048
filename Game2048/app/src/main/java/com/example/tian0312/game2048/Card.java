@@ -48,12 +48,22 @@ public class Card extends FrameLayout{
     }
 
     // 待补充
-    public void numColor(int num) {
+    public void setColor(int num) {
         switch (num) {
             case 0 : numText.setBackgroundColor(0x33ffffff);break;
-            case 2 : numText.setBackgroundColor(0xffff0000);break;
-            case 4 : numText.setBackgroundColor(0xff00ff00);break;
-            default:;
+            case 2 : numText.setBackgroundColor(0x99ffffff);break;
+            case 4 : numText.setBackgroundColor(0xffede014);break;
+            case 8 : numText.setBackgroundColor(0xfff4b179);break;
+            case 16 : numText.setBackgroundColor(0xfff59163);break;
+            case 32 : numText.setBackgroundColor(0xfff67c5f);break;
+            case 64 : numText.setBackgroundColor(0xfff65e3b);break;
+            case 128 : numText.setBackgroundColor(0xffedcc61);break;
+            case 256 : numText.setBackgroundColor(0xffedcc61);break;
+            case 512 : numText.setBackgroundColor(0xffedcc61);break;
+            case 1024 : numText.setBackgroundColor(0xffedcc61);break;
+            case 2048 : numText.setBackgroundColor(0xffedc22e);break;
+            case 4096 : numText.setBackgroundColor(0xff0000ff);break;
+            default: numText.setBackgroundColor(0xff0000ff);
         }
     }
 
