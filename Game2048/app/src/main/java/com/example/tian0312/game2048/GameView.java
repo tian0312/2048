@@ -1,6 +1,8 @@
 package com.example.tian0312.game2048;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -18,6 +20,7 @@ public class GameView extends GridLayout {
     private Card[][] cardsMap = new Card[4][4];
     // 用于纪录没有数字卡片的位置
     private List<Point> emptyPoints = new ArrayList<Point>();
+    private boolean isChanged;
 
     public GameView(Context context) {
         super(context);
@@ -76,16 +79,8 @@ public class GameView extends GridLayout {
         // 初始添加两个数
         addRandomNum();
         addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
-        addRandomNum();
+        // 分数清零
+        MainActivity.getMainActivity().clearScore();
     }
 
     // 开始游戏随即添加两个数
@@ -152,7 +147,8 @@ public class GameView extends GridLayout {
 
     // 游戏逻辑
     private void leftGesture() {
-        System.out.println("left");
+        // 判断是否应该再产生一个随机数
+        isChanged = false;
         // 两层循环遍历所有16个方格
         for (int y = 0; y < 4; y++){
             for (int x = 0; x < 4; x++) {
@@ -164,6 +160,7 @@ public class GameView extends GridLayout {
                         if(cardsMap[x][y].getNum() <= 0) {
                             cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
                             cardsMap[x1][y].setNum(0);
+                            isChanged = true;
                             // 此处研究一下
                             // 为了防止类似2222情况后面两个2不合并
                             x--;
@@ -173,6 +170,9 @@ public class GameView extends GridLayout {
                         else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
                             cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                             cardsMap[x1][y].setNum(0);
+                            // 加分
+                            MainActivity.getMainActivity().addScore(cardsMap[x][y].getNum());
+                            isChanged = true;
                             break;
                         }
                         else if(!cardsMap[x][y].equals(cardsMap[x1][y])) {
@@ -182,9 +182,13 @@ public class GameView extends GridLayout {
                 }
             }
         }
+        if(isChanged) {
+            addRandomNum();
+            checkEnd();
+        }
     }
     private void rightGesture() {
-        System.out.println("right");
+        isChanged = false;
         // 两层循环遍历所有16个方格
         for (int y = 0; y < 4; y++){
             for (int x = 3; x >= 0; x--) {
@@ -196,6 +200,7 @@ public class GameView extends GridLayout {
                         if(cardsMap[x][y].getNum() <= 0) {
                             cardsMap[x][y].setNum(cardsMap[x1][y].getNum());
                             cardsMap[x1][y].setNum(0);
+                            isChanged = true;
                             // 此处研究一下
                             x++;
                             break;
@@ -204,6 +209,8 @@ public class GameView extends GridLayout {
                         else if (cardsMap[x][y].equals(cardsMap[x1][y])) {
                             cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                             cardsMap[x1][y].setNum(0);
+                            MainActivity.getMainActivity().addScore(cardsMap[x][y].getNum());
+                            isChanged = true;
                             break;
                         }
                         else if(!cardsMap[x][y].equals(cardsMap[x1][y])) {
@@ -213,9 +220,13 @@ public class GameView extends GridLayout {
                 }
             }
         }
+        if(isChanged) {
+            addRandomNum();
+            checkEnd();
+        }
     }
     private void downGesture() {
-        System.out.println("down");
+        isChanged = false;
         // 两层循环遍历所有16个方格
         for (int x = 0; x < 4; x++){
             for (int y = 3; y >= 0; y--) {
@@ -227,6 +238,7 @@ public class GameView extends GridLayout {
                         if(cardsMap[x][y].getNum() <= 0) {
                             cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
                             cardsMap[x][y1].setNum(0);
+                            isChanged = true;
                             // 此处研究一下
                             y++;
                             break;
@@ -235,6 +247,8 @@ public class GameView extends GridLayout {
                         else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
                             cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                             cardsMap[x][y1].setNum(0);
+                            MainActivity.getMainActivity().addScore(cardsMap[x][y].getNum());
+                            isChanged = true;
                             break;
                         }
                         else if(!cardsMap[x][y].equals(cardsMap[x][y1])) {
@@ -244,9 +258,13 @@ public class GameView extends GridLayout {
                 }
             }
         }
+        if(isChanged) {
+            addRandomNum();
+            checkEnd();
+        }
     }
     private void upGesture() {
-        System.out.println("up");
+        isChanged = false;
         // 两层循环遍历所有16个方格
         for (int x = 0; x < 4; x++){
             for (int y = 0; y < 4; y++) {
@@ -258,6 +276,7 @@ public class GameView extends GridLayout {
                         if(cardsMap[x][y].getNum() <= 0) {
                             cardsMap[x][y].setNum(cardsMap[x][y1].getNum());
                             cardsMap[x][y1].setNum(0);
+                            isChanged = true;
                             // 此处研究一下
                             y--;
                             break;
@@ -266,6 +285,8 @@ public class GameView extends GridLayout {
                         else if (cardsMap[x][y].equals(cardsMap[x][y1])) {
                             cardsMap[x][y].setNum(cardsMap[x][y].getNum() * 2);
                             cardsMap[x][y1].setNum(0);
+                            MainActivity.getMainActivity().addScore(cardsMap[x][y].getNum());
+                            isChanged = true;
                             break;
                         }
                         else if(!cardsMap[x][y].equals(cardsMap[x][y1])) {
@@ -274,6 +295,39 @@ public class GameView extends GridLayout {
                     }
                 }
             }
+        }
+        if(isChanged) {
+            addRandomNum();
+            checkEnd();
+        }
+    }
+
+    private void checkEnd() {
+
+        boolean isEnd = true;
+
+        ALL:
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                if (cardsMap[x][y].getNum() == 0 ||
+                        (x > 0 && cardsMap[x][y].equals(cardsMap[x-1][y])) ||
+                        (x < 3 && cardsMap[x][y].equals(cardsMap[x+1][y])) ||
+                        (y > 0 && cardsMap[x][y].equals(cardsMap[x][y-1])) ||
+                        (y < 3 && cardsMap[x][y].equals(cardsMap[x][y+1]))
+                        ) {
+                    isEnd = false;
+                    break ALL;
+                }
+            }
+        }
+
+        if (isEnd) {
+            new AlertDialog.Builder(getContext()).setTitle("Tip").setMessage("Game Over").setPositiveButton("Restart", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startGame();
+                }
+            }).show();
         }
     }
 }

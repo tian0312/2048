@@ -46,4 +46,15 @@ public class Card extends FrameLayout{
     public boolean equals(Card c) {
         return this.getNum() == c.getNum();
     }
+
+    // 待补充
+    public void numColor(int num) {
+        switch (num) {
+            case 0 : numText.setBackgroundColor(0x33ffffff);break;
+            case 2 : numText.setBackgroundColor(0xffff0000);break;
+            case 4 : numText.setBackgroundColor(0xff00ff00);break;
+            default:;
+        }
+    }
+
 }
