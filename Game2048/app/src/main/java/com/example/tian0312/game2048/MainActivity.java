@@ -4,11 +4,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private Button restartBtn;
 
     private TextView scoreText;
     private int score = 0;
@@ -28,6 +32,14 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         scoreText = (TextView)findViewById(R.id.scoreText);
+
+        restartBtn = (Button)findViewById(R.id.restartBtn);
+        restartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameView.getGameView().startGame();
+            }
+        });
 
     }
 

@@ -22,17 +22,26 @@ public class GameView extends GridLayout {
     private List<Point> emptyPoints = new ArrayList<Point>();
     private boolean isChanged;
 
+    private static GameView gameView = null;
+
     public GameView(Context context) {
         super(context);
+        gameView = this;
         initGameView();
     }
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        gameView = this;
         initGameView();
     }
     public GameView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        gameView = this;
         initGameView();
+    }
+
+    public static GameView getGameView() {
+        return gameView;
     }
 
     private void initGameView() {
@@ -68,7 +77,8 @@ public class GameView extends GridLayout {
         }
     }
 
-    private void startGame() {
+    // 开始游戏设置初始状态
+    public void startGame() {
         // 清理
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
@@ -88,7 +98,7 @@ public class GameView extends GridLayout {
         MainActivity.getMainActivity().clearScore();
     }
 
-    // 开始游戏随即添加两个数
+    // 添加随机数（2、4）
     private void addRandomNum() {
 
         emptyPoints.clear();
@@ -106,6 +116,7 @@ public class GameView extends GridLayout {
 
     }
 
+    // 判断手势方向
     class GestureListener implements OnTouchListener {
 
         private float xStart;
@@ -327,6 +338,7 @@ public class GameView extends GridLayout {
         }
     }
 
+    // 检查游戏是否结束
     private void checkEnd() {
 
         boolean isEnd = true;

@@ -26,10 +26,18 @@
     </LinearLayout>
 
     <com.example.tian0312.game2048.GameView
-        android:layout_weight="1"
+        android:layout_weight="5"
         android:layout_width="match_parent"
         android:layout_height="0dp">
     </com.example.tian0312.game2048.GameView>
+
+    <Button
+        android:id="@+id/restartBtn"
+        android:text="Restart"
+        android:layout_weight="1"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
 
 

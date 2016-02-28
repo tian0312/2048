@@ -47,7 +47,7 @@ public class Card extends FrameLayout{
         return this.getNum() == c.getNum();
     }
 
-    // 待补充
+    // 数字的背景颜色
     public void setColor(int num) {
         switch (num) {
             case 0 : numText.setBackgroundColor(0x33ffffff);break;
